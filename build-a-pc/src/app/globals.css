@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Audiowide';
+  src: url('/fonts/Audiowide-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --background: linear-gradient(135deg, #08004a, #134472);
+  --foreground: #ffffff;
+  --font-audiowide: 'Audiowide', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: linear-gradient(135deg, #08004a, #134472);
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-audiowide);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.headerBlock {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  top: 0;
+  width: 100%;
+  height: 85px;
+  background-color: linear-gradient(135deg, #08004a, #134472);
+  text-align: center;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  overflow: hidden;
+}
+
+.contactInformation {
+  display: inline-block;
+  align-self: center;
+  font-weight: bold;
+}
+
+.signIn {
+  align-self: center;
+  font-weight: bold;
+}
+
+.shoppingCart {
+  display: inline-block;
+  align-self: center;
+  width: 60px;
+}
+
+.navigationBar {
+  background-color: linear-gradient(135deg, #08004a, #134472);
+  position: static;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-self: center;
+  top: 85px;
+  width: 100%;
+  height: 40px;
+  font-weight: bold;
+}
+
+.navigationBar button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.navigationBar button:hover,
+.navigationBar Link:hover {
+  opacity: 0.7;
+}
+
+.footerBox {
+  background-color: linear-gradient(135deg, #08004a, #134472);
+  position: static;
+  bottom: 0;
+  width: 100%;
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.paymentMethods {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  border-radius: 8px;
+  max-width: 275px;
+  gap: 20px;
+  padding: 3px;
+  margin-bottom: 4px;
+}
+
+.paymentMethods img {
+  height: 50px;
+  object-fit: contain;
+}
+
+div strong {
+  font-size: 18px;
+}
+
+.menuContainer {
+  position: relative;
+}
+
+.menuBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  background-color: white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  color: black;
+}
+
+.menuContainer:hover .menuBar {
+  display: flex;
+}
+
+.menuBar .menuItem {
+  position: relative;
+}
+
+.menuBar li {
+  float: none;
+}
+
+.menuBar li a, .menuContainer button {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.menuBar li a:hover, .menuContainer button:hover {
+opacity: 0.7;
+}
+
+.subMenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: white;
+  min-width: 160px;
+  z-index: 1;
+  color: black;
+}
+
+.subMenu li {
+  float: none;
+}
+
+.subMenu li a {
+  padding: 12px 16px;
+  color: black;
+}
+
+.subMenu li a:hover {
+  background-color: #f0f0f0;
+}
+
+.menuItem:hover .subMenu {
+  display: block;
+}
+
+.mainContent {
+  width: 100%;
+  display: block;
+  margin-top: 100px;
+  justify-items: center;
+  text-align: center;
+}
+
+.mainContent h2 {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+.userDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdownMenu button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  color: black;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdownMenu button:hover {
+  background-color: #f0f0f0;
+}
