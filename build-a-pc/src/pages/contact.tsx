@@ -12,16 +12,16 @@ function Contact()
     message:""
   });
 
-  const handleChange=(e)=>
-    {
-    const {name,value}=e.target;
-    setFormData({
-      ...formData,
-      [name]:value
-    });
-  };
-
-  const handleSubmit=async(e)=>
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
+};
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>
     {
     e.preventDefault();
     const {email,message}=formData;
@@ -30,7 +30,7 @@ function Contact()
       {
       try 
       {
-        const res=await fetch('http://localhost:4001/api/contact', 
+        const res=await fetch('https://build-a-pc-backend.onrender.com/api/contact', 
         {
           method:'POST',
           headers:{

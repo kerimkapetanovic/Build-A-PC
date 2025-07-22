@@ -1,10 +1,15 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import {useEffect,useState} from "react";
 import {useRouter} from 'next/navigation';
-
+type User = {
+  name: string;
+  surname: string;
+  // add other properties if needed
+};
 function Header(){
-  const [user,setUser]=useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [dropdownVisible,setDropdownVisible]=useState(false);
   const [searchQuery,setSearchQuery]=useState('');
   const router=useRouter();
@@ -30,7 +35,7 @@ function Header(){
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleSearchChange= (e)=> 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
   {
     setSearchQuery(e.target.value);
   };
@@ -45,7 +50,7 @@ function Header(){
 
   return (
     <div className="headerBlock">
-      <a href="http://localhost:3000"><img src="/buildAPCLogo.PNG" style={{width: "221px",border: "none", marginLeft: "14px",}}></img></a>
+      <a href="https://build-a-pc-frontend.onrender.com/"><img src="/buildAPCLogo.PNG" style={{width: "221px",border: "none", marginLeft: "14px",}}></img></a>
       <div className="searchBox">
         <input type="text" placeholder="Search:" value={searchQuery} onChange={handleSearchChange} style={{width: "750px",height: "45px",display: "inline-block",color: "black",borderTopLeftRadius: "4px",borderBottomLeftRadius: "4px",fontWeight: "bold",}}></input>
         <button onClick={handleSearch}>

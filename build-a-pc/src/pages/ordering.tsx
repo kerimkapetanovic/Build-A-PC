@@ -31,7 +31,7 @@ function Ordering()
       shipping_address:{city,postCode,address,},
     };
 
-    const response = await fetch('http://localhost:4001/api/orders', 
+    const response = await fetch('https://build-a-pc-backend.onrender.com/api/orders', 
 {
       method:'POST',
       headers: 

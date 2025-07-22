@@ -35,7 +35,7 @@ function Register()
       {
       try 
       {
-        const res=await fetch('http://localhost:4001/api/register', 
+        const res=await fetch('https://build-a-pc-backend.onrender.com/api/register', 
         {
           method:'POST',
           headers:{

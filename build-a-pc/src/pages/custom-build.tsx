@@ -25,7 +25,11 @@ function CustomBuild() {
     setStep(step + 1);
   };
 
-  const handleComponentSelect = (component, setSelectedComponent, componentType) => {
+ const handleComponentSelect = (
+  component: { price: number }, 
+  setSelectedComponent: React.Dispatch<React.SetStateAction<any>>, 
+  componentType: string
+) => {
     const newRemainingBudget = remainingBudget + (selectedComponents[step]?.price || 0) - component.price;
     if (newRemainingBudget < 0) {
       alert('You have exceeded your budget!');

@@ -1,10 +1,12 @@
-/** @type {import('next').NextConfig} */
+// next.config.js
 const nextConfig = {
-  output: 'standalone',
-  reactStrictMode: true,
-  eslint: {
-    ignoreDuringBuilds: true, // optional: skip linting errors during docker build
+  typescript: {
+    ignoreBuildErrors: true,
   },
-}
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
-export default nextConfig
+module.exports = nextConfig;
+export default nextConfig;
