@@ -1,15 +1,11 @@
-"use client";
 import React from "react";
+"use client";
 import Link from "next/link";
 import {useEffect,useState} from "react";
 import {useRouter} from 'next/navigation';
-type User = {
-  name: string;
-  surname: string;
-  // add other properties if needed
-};
+
 function Header(){
-  const [user, setUser] = useState<User | null>(null);
+  const [user,setUser]=useState(null);
   const [dropdownVisible,setDropdownVisible]=useState(false);
   const [searchQuery,setSearchQuery]=useState('');
   const router=useRouter();

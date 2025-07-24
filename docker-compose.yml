@@ -1,18 +1,25 @@
-version: '3.8'
 
 services:
+  
+  
+  database:
+    build: ./postgres
+    image: kerimkapetanovic/postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./backend/.env
+    
   frontend:
     build: ./build-a-pc
+    image: kerimkapetanovic/build-a-pc
     ports:
-      - "5000:80"  # host:container → maps localhost:5000 to container:80
+      - "5000:80"  
 
   backend:
     build: ./backend
+    image: kerimkapetanovic/backend
     ports:
-      - "4001:4001"
-    environment:
-      - NODE_ENV=production
-      - DB_USER=your_db_user
-      - DB_PASSWORD=your_db_pass
-      - DB_NAME=your_db_name
-      - DB_HOST=your_db_host
+      - "4001:4001" 
+    env_file:
+      - ./backend/.env
