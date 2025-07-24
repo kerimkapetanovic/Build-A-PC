@@ -10,14 +10,14 @@
 }
 
 :root {
-  --background: linear-gradient(135deg, #08004a, #134472);
+  --background: linear-gradient(135deg, yellow, #134472); /*#08004a*/
   --foreground: #ffffff;
   --font-audiowide: 'Audiowide', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: linear-gradient(135deg, #08004a, #134472);
+    --background: linear-gradient(135deg, yellow, #134472);
     --foreground: #ffffff;
   }
 }
