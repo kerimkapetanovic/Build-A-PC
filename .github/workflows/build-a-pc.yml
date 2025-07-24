@@ -1,4 +1,4 @@
-name: Build-A-PC CI/CD Pipeline
+name: Build-A-PC CI/CD Pipelin
 
 on:
   push:
