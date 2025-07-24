@@ -1,0 +1,63 @@
+name: Build-A-PC CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install hadolint (Dockerfile linter)
+        run: |
+          wget -qO /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x /usr/local/bin/hadolint
+
+      - name: Lint all Dockerfiles
+        run: |
+          find . -name Dockerfile -exec hadolint {} \;
+
+      - name: Build and push backend image
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/backend:${SHORT_SHA}"
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./backend
+          docker push "$IMAGE_NAME"
+
+      - name: Build and push frontend image
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/build-a-pc:${SHORT_SHA}"
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./build-a-pc
+          docker push "$IMAGE_NAME"
+
+      - name: Build and push postgres image
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/postgres:${SHORT_SHA}"
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./postgres
+          docker push "$IMAGE_NAME"
