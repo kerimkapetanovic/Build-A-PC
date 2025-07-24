@@ -2,11 +2,9 @@ name: Build-A-PC CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   docker-build:
@@ -19,12 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Login to GitHub Container Registry
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Install hadolint (Dockerfile linter)
         run: |
@@ -40,8 +38,8 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/backend:${SHORT_SHA}"
-          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./backend
+          IMAGE_NAME="kerimkapetanovic/backend:${SHORT_SHA}"
+          docker build -t "$IMAGE_NAME" ./backend
           docker push "$IMAGE_NAME"
 
       - name: Build and push frontend image
@@ -49,8 +47,8 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/build-a-pc:${SHORT_SHA}"
-          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./build-a-pc
+          IMAGE_NAME="kerimkapetanovic/build-a-pc:${SHORT_SHA}"
+          docker build -t "$IMAGE_NAME" ./build-a-pc
           docker push "$IMAGE_NAME"
 
       - name: Build and push postgres image
@@ -58,6 +56,6 @@ jobs:
           DOCKER_BUILDKIT: 1
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
-          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/postgres:${SHORT_SHA}"
-          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./postgres
+          IMAGE_NAME="kerimkapetanovic/postgres:${SHORT_SHA}"
+          docker build -t "$IMAGE_NAME" ./postgres
           docker push "$IMAGE_NAME"
