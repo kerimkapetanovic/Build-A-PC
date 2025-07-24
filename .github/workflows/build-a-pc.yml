@@ -2,9 +2,11 @@ name: Build-A-PC CI/CD Pipeline
 
 on:
   push:
-    branches: master
+    branches:
+      - master
   pull_request:
-    branches: master
+    branches:
+      - master
 
 jobs:
   docker-build:
@@ -20,9 +22,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          registry: docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install hadolint (Dockerfile linter)
         run: |
@@ -39,7 +40,7 @@ jobs:
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
           IMAGE_NAME="kerimkapetanovic/backend:${SHORT_SHA}"
-          docker build -t "$IMAGE_NAME" ./backend
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./backend
           docker push "$IMAGE_NAME"
 
       - name: Build and push frontend image
@@ -48,7 +49,7 @@ jobs:
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
           IMAGE_NAME="kerimkapetanovic/build-a-pc:${SHORT_SHA}"
-          docker build -t "$IMAGE_NAME" ./build-a-pc
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./build-a-pc
           docker push "$IMAGE_NAME"
 
       - name: Build and push postgres image
@@ -57,5 +58,5 @@ jobs:
         run: |
           SHORT_SHA="${GITHUB_SHA:0:7}"
           IMAGE_NAME="kerimkapetanovic/postgres:${SHORT_SHA}"
-          docker build -t "$IMAGE_NAME" ./postgres
+          docker build --build-arg SHORT_SHA="$SHORT_SHA" -t "$IMAGE_NAME" ./postgres
           docker push "$IMAGE_NAME"
